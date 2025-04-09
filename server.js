@@ -4,7 +4,7 @@ const User = require('./models/user');
 const userDao = require('./dao/userDao');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
