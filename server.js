@@ -4,7 +4,7 @@ const User = require('./models/user');
 const userDao = require('./dao/userDao');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -22,5 +22,5 @@ app.post('/api/users', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
