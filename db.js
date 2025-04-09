@@ -1,13 +1,12 @@
-require('dotenv').config(); // Load variables from .env
-
+require('dotenv').config(); // Load variables from .env file
 const mysql = require('mysql2/promise');
 
 const db = mysql.createPool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: process.env.MYSQL_HOST,  // Use the host from environment variables
+  port: process.env.MYSQL_PORT,  // Use the port from environment variables
+  user: process.env.MYSQL_USER,  // Use the user from environment variables
+  password: process.env.MYSQL_PASSWORD,  // Use the password from environment variables
+  database: process.env.MYSQL_DATABASE,  // Use the database from environment variables
 });
 
 module.exports = db;
