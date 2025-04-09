@@ -8,15 +8,23 @@
   </head>
   <body>
     <h2>User Info</h2>
+    <!-- User Form -->
     <form id="userForm">
       <input type="text" id="name" placeholder="Name" required />
       <input type="email" id="email" placeholder="Email" required />
       <input type="text" id="phone" placeholder="Phone" required />
       <button type="submit">Submit</button>
     </form>
+
+    <!-- Response Section -->
     <p id="response"></p>
 
+    <!-- User List Section -->
+    <h2>User List</h2>
+    <ul id="userList"></ul> <!-- List of users -->
+
     <script>
+      // Handle form submission
       document.getElementById('userForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const data = {
@@ -24,13 +32,36 @@
           email: document.getElementById('email').value,
           phone: document.getElementById('phone').value,
         };
+
+        // Send data to the server
         const res = await fetch('/api/users', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
         document.getElementById('response').innerText = await res.text();
+
+        // Optionally, you can refresh the user list after adding a new user
+        loadUsers();
       });
+
+      // Function to load users from the backend
+      const loadUsers = async () => {
+        const res = await fetch('/api/users');
+        const users = await res.json();
+        
+        // Display the users in a list
+        const userList = document.getElementById('userList');
+        userList.innerHTML = ''; // Clear current list
+        users.forEach(user => {
+          const li = document.createElement('li');
+          li.innerText = `ID: ${user.id} - Name: ${user.name} - Email: ${user.email} - Phone: ${user.phone}`;
+          userList.appendChild(li);
+        });
+      };
+
+      // Load users when the page is loaded
+      window.onload = loadUsers;
     </script>
   </body>
 </html>

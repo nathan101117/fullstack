@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
+// Route to save user
 app.post('/api/users', async (req, res) => {
   try {
     const { name, email, phone } = req.body;
@@ -21,6 +22,17 @@ app.post('/api/users', async (req, res) => {
   }
 });
 
+// Route to get all users
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = await userDao.findAll();
+    res.json(users);  // Return users as a JSON response
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error fetching users');
+  }
+});
+
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
