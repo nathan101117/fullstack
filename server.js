@@ -22,6 +22,21 @@ app.post('/api/users', async (req, res) => {
   }
 });
 
+// Route to get all users
+app.get('/api/users', async (req, res) => {
+  try {
+    const users = await userDao.findAll();
+    res.json(users);  // Return users as a JSON response
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error fetching users');
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
+});
+
+app.get('/', (req, res) => {
+  res.send('Welcome to the user form page');
 });
