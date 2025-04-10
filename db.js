@@ -1,15 +1,13 @@
-require('dotenv').config(); // Load variables from .env
+require('dotenv').config();  // Load environment variables from .env file
 
 const mysql = require('mysql2/promise');
 
+// Use the MYSQL_URL to configure the connection pool
 const db = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
+  uri: process.env.MYSQL_URL  // Use MYSQL_URL for connection
 });
 
+// Test the connection to the database
 db.getConnection()
   .then((connection) => {
     console.log('Connected to database');
@@ -19,4 +17,4 @@ db.getConnection()
     console.error('Database connection failed:', err);
   });
 
-module.exports = db;
+module.exports = db;  // Export the db connection
